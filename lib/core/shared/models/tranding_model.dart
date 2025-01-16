@@ -1,6 +1,8 @@
 import '../entities/tranding_entity.dart';
 
 class TrandingModel extends Tranding {
+  List<int> genreId = [];
+
   TrandingModel.fromJson(Map<String, dynamic> json) {
     backdropPath = json['backdrop_path'];
     id = json['id'];
@@ -11,7 +13,8 @@ class TrandingModel extends Tranding {
     mediaType = json['media_type'];
     adult = json['adult'];
     originalLanguage = json['original_language'];
-    genreIds = json['genre_ids'].cast<int>();
+    genreIds =
+        json['genre_ids'] == null ? genreId : json['genre_ids'].cast<int>();
     popularity = json['popularity'];
     releaseDate = json['release_date'];
     video = json['video'];
