@@ -115,8 +115,9 @@ class RecomandSearch extends StatelessWidget {
                                       fontWeight: FontWeight.w600,
                                       color: Colors.white)),
                               TextSpan(
-                                  text: state.keywords[index].substring(state
-                                      .searchEditingController.text.length),
+                                  text: state.keywords[index].length > state.searchEditingController.text.length
+                                      ? state.keywords[index].substring(state.searchEditingController.text.length)
+                                      : '',
                                   style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w300,

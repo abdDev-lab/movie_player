@@ -92,7 +92,7 @@ class SearchOutput extends StatelessWidget {
                         mediaOverview: state.searchList[index].overview!,
                         mediaId: state.searchList[index].id!,
                         mediaType: state.searchList[index].mediaType!,
-                        mediaImageUrl: state.searchList[index].posterPath!,
+                        mediaImageUrl: state.searchList[index].posterPath,
                         mediaRating: state.searchList[index].voteAverage
                             .toString()
                             .substring(0, 3),

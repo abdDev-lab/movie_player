@@ -50,10 +50,11 @@ class HomePage extends StatelessWidget {
                               ),
                             ),
                             Container(
-                              height: 40,
-                              width: 40,
+                              height: 46,
+                              width: 46,
                               margin: const EdgeInsets.only(right: 16),
                               decoration: const BoxDecoration(
+                                image: DecorationImage(image: AssetImage("assets/images/profile.png")),
                                   shape: BoxShape.circle, color: Colors.white),
                             )
                           ],

@@ -10,12 +10,13 @@ import 'package:uicons/uicons.dart';
 class MediaDetailsAppBar extends StatelessWidget {
   final int mediaId;
   final String mediaPoster;
+  final bool isNetworkImage;
 
-  const MediaDetailsAppBar({
-    super.key,
-    required this.mediaId,
-    required this.mediaPoster,
-  });
+  const MediaDetailsAppBar(
+      {super.key,
+      required this.mediaId,
+      required this.mediaPoster,
+      this.isNetworkImage = true});
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +38,10 @@ class MediaDetailsAppBar extends StatelessWidget {
               const EdgeInsets.only(left: 16, right: 16, top: 48, bottom: 24),
           decoration: BoxDecoration(
               image: DecorationImage(
-                  image: CachedNetworkImageProvider(
-                      "${ApiUrl.movieImageBaseUrl}$mediaPoster"),
+                  image: isNetworkImage
+                      ? CachedNetworkImageProvider(
+                          "${ApiUrl.movieImageBaseUrl}$mediaPoster")
+                      : AssetImage(mediaPoster),
                   fit: BoxFit.cover),
               borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(24),

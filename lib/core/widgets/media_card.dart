@@ -12,7 +12,7 @@ class MediaCard extends StatelessWidget {
   final int mediaId;
   final String mediaRating;
   final String mediaName;
-  final String mediaImageUrl;
+  final String? mediaImageUrl;
   final String mediaType;
   final String mediaOverview;
   final bool showType;
@@ -29,6 +29,17 @@ class MediaCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String mediaImage = "";
+    bool isNetworkImage = true;
+    if (mediaImageUrl != null) {
+      mediaImage = mediaImageUrl!;
+    } else {
+      isNetworkImage = false;
+      mediaImage = mediaType == "movie"
+          ? "assets/images/movie_image.png"
+          : "assets/images/movie_image.png";
+    }
+
     return SizedBox(
       width: 170,
       child: Stack(
@@ -40,10 +51,11 @@ class MediaCard extends StatelessWidget {
                   builder: (context) => BlocProvider.value(
                         value: context.read<WatchlistMediaCubit>(),
                         child: MediaDetailsPage(
+                            isNetworkImage: isNetworkImage,
                             mediaId: mediaId,
                             mediaType: mediaType,
                             mediaName: mediaName,
-                            mediaPoster: mediaImageUrl,
+                            mediaPoster: mediaImage,
                             mediaOverview: mediaOverview,
                             mediaRate: mediaRating),
                       )));
@@ -112,22 +124,34 @@ class MediaCard extends StatelessWidget {
                   Positioned(
                       right: 0,
                       bottom: 0,
-                      child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 1000),
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.5),
-                              borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(16),
-                                  bottomRight: Radius.circular(16))),
-                          child:
-                              BlocBuilder<WatchlistMediaCubit, WatchlistState>(
-                            builder: (context, state) {
-                              return Icon(state.watchlist.contains(mediaId)
-                                  ? Icons.bookmark
-                                  : Icons.bookmark_border_rounded);
+                      child: BlocBuilder<WatchlistMediaCubit, WatchlistState>(
+                        builder: (context, state) {
+                          return InkWell(
+                            onTap: () {
+                              if (!state.watchlist.contains(mediaId)) {
+                                BlocProvider.of<WatchlistMediaCubit>(context)
+                                    .addToWatchList(mediaId, mediaType);
+                                BlocProvider.of<AnimatedBookmarkCubit>(context)
+                                    .addToWatchList(mediaId);
+                              } else {
+                                BlocProvider.of<WatchlistMediaCubit>(context)
+                                    .removeFromWatchList(mediaId, mediaType);
+                              }
                             },
-                          ))),
+                            child: AnimatedContainer(
+                                duration: const Duration(milliseconds: 1000),
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                    color: Colors.black.withOpacity(0.5),
+                                    borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(16),
+                                        bottomRight: Radius.circular(16))),
+                                child: Icon(state.watchlist.contains(mediaId)
+                                    ? Icons.bookmark
+                                    : Icons.bookmark_border_rounded)),
+                          );
+                        },
+                      )),
                 ],
               ),
             ),

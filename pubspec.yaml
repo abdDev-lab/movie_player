@@ -35,9 +35,10 @@ dependencies:
   equatable: ^2.0.6
   flutter:
     sdk: flutter
-  flutter_bloc: ^8.1.6
+  flutter_bloc: ^9.0.0
+  flutter_svg: ^2.0.17
   get_it: ^8.0.2
-  internet_connection_checker: ^1.0.0+1
+  internet_connection_checker: ^3.0.1
   jiffy: ^6.3.1
   salomon_bottom_bar: ^3.3.2
   shared_preferences: ^2.3.3
@@ -46,7 +47,7 @@ dependencies:
   youtube_player_flutter: ^9.1.1
 
 dev_dependencies:
-  flutter_lints: ^4.0.0
+  flutter_lints: ^5.0.0
   flutter_test:
     sdk: flutter
 
@@ -62,6 +63,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - assets/icons/movie_off.svg
+    - assets/icons/bookmark_off.svg
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

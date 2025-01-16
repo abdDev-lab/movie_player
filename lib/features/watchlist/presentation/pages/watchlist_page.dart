@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
 import '../../../../core/configs/assets/app_images.dart';
 import '../../../../core/configs/theme/app_colors.dart';
 
@@ -114,27 +116,51 @@ class WatchlistPage extends StatelessWidget {
             } else {
               return const SizedBox(); // loading
             }
-            return GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 0.77,
-                    crossAxisSpacing: 12,
-                    mainAxisSpacing: 12),
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: watchList.length,
-                itemBuilder: (context, index) => WatchlistCard(
-                      mediaId: watchList[index].id,
-                      mediaImgUrl: watchList[index].posterPath,
-                      mediaType: mediaType,
-                      watchlist: watchList,
-                      mediaRating: watchList[index]
-                          .voteAverage
-                          .toString()
-                          .substring(0, 3),
-                      mediaName: watchList[index].name,
-                      mediaOverview: watchList[index].overview,
-                    ));
+            if (watchList.isNotEmpty) {
+              return GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 0.77,
+                      crossAxisSpacing: 12,
+                      mainAxisSpacing: 12),
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: watchList.length,
+                  itemBuilder: (context, index) => WatchlistCard(
+                        mediaId: watchList[index].id,
+                        mediaImgUrl: watchList[index].posterPath,
+                        mediaType: mediaType,
+                        watchlist: watchList,
+                        mediaRating: watchList[index]
+                            .voteAverage
+                            .toString()
+                            .substring(0, 3),
+                        mediaName: watchList[index].name,
+                        mediaOverview: watchList[index].overview,
+                      ));
+            } else {
+              return SizedBox(
+                height: 200,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  spacing: 12,
+                  children: [
+                    SvgPicture.asset(
+                      "assets/icons/bookmark_off.svg",
+                      height: 56,
+                      color: Colors.grey.withOpacity(0.5),
+                    ),
+                    Text(
+                      "You have no WatchList.",
+                      style: TextStyle(
+                        color: Colors.grey.withOpacity(0.5),
+                      ),
+                    )
+                  ],
+                ),
+              );
+            }
           },
         ),
       ],

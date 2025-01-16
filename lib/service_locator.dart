@@ -64,8 +64,6 @@ Future<void> setupServiceLocator() async {
   // Dio
   final sharedPreferences = await SharedPreferences.getInstance();
 
-
-
   BaseOptions movieAndTvOptions = BaseOptions(
     baseUrl: ApiUrl.moviesAndTvBaseUrl,
     headers: {
@@ -80,15 +78,14 @@ Future<void> setupServiceLocator() async {
 
   sl.registerLazySingleton(() => sharedPreferences);
 
-  sl.registerLazySingleton(() => InternetConnectionChecker());
+  sl.registerLazySingleton(() => InternetConnectionChecker.createInstance());
 
   sl.registerFactory(() => SplashCubit(sharedPreferences));
 
   sl.registerLazySingleton<NetworkInfo>(
       () => NetworkInfoImpl(internetConnectionChecker: sl()));
 
-  sl.registerLazySingleton<AuthApiService>(
-      () => AuthApiServiceImpWithDio());
+  sl.registerLazySingleton<AuthApiService>(() => AuthApiServiceImpWithDio());
 
   sl.registerLazySingleton<AuthRepository>(
       () => AuthRepositoryImp(authApiService: sl(), networkInfo: sl()));

@@ -5,6 +5,10 @@ class AppTheme {
   static final appTheme = ThemeData(
       fontFamily: "Poppins",
       brightness: Brightness.dark,
+      textSelectionTheme: TextSelectionThemeData(
+        cursorColor: Colors.white,
+        selectionHandleColor: AppColors.primary
+      ),
       scaffoldBackgroundColor: AppColors.secondBackground,
       inputDecorationTheme: InputDecorationTheme(
         filled: true,

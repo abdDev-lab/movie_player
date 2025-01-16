@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movieplayer/features/home/presentation/home/bloc/watchlist/watchlist_cubit.dart';
 import '../../../../../core/configs/theme/app_colors.dart';
 import '../bloc/mainBottomNavBar/main_bottom_nav_bar_cubit.dart';
 import '../../../../watchlist/presentation/bloc/watchlist/watchlist_cubit.dart';
@@ -13,7 +14,14 @@ class HomeBottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Map> menuItems = [
-      {"title": "Home", "Icon": UIcons.regularRounded.home, "onTap": () {}},
+      {
+        "title": "Home",
+        "Icon": UIcons.regularRounded.home,
+        "onTap": () {
+          print("hellow");
+          BlocProvider.of<WatchlistMediaCubit>(context).getWatchList();
+        }
+      },
       {
         "title": "Watchlist",
         "Icon": UIcons.regularRounded.bookmark,
@@ -33,6 +41,7 @@ class HomeBottomNavBar extends StatelessWidget {
             duration: const Duration(milliseconds: 200),
             margin: const EdgeInsets.only(top: 16, bottom: 16),
             onTap: (value) {
+                menuItems[value]["onTap"]();
               BlocProvider.of<MainBottomNavBarCubit>(context)
                   .changeMainPage(value);
               BlocProvider.of<WatchlistCubit>(context).getWatchlistMovies();

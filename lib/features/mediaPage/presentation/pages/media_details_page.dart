@@ -23,6 +23,7 @@ class MediaDetailsPage extends StatelessWidget {
   final String mediaPoster;
   final String mediaOverview;
   final String mediaRate;
+  final bool isNetworkImage ; 
   const MediaDetailsPage({
     super.key,
     required this.mediaId,
@@ -31,6 +32,7 @@ class MediaDetailsPage extends StatelessWidget {
     required this.mediaPoster,
     required this.mediaOverview,
     required this.mediaRate,
+    this.isNetworkImage = true 
   });
 
   @override
@@ -63,7 +65,7 @@ class MediaDetailsPage extends StatelessWidget {
       ],
       child: CustomScrollView(
         slivers: [
-          MediaDetailsAppBar(mediaId: mediaId, mediaPoster: mediaPoster),
+          MediaDetailsAppBar(mediaId: mediaId, mediaPoster: mediaPoster,isNetworkImage: isNetworkImage,),
           SliverList(
               delegate: SliverChildListDelegate([
             const MediaGenres(),
